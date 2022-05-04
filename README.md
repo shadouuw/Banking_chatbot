@@ -20,17 +20,17 @@ The dataset is stored in mongodb database and contain three essential columns qu
 
 
 
-![alt text](images/python1.png "Logo Title Text 1")
+![alt text](images/python1.png "py")
 ### Python 3.9.5
 
-![alt text](images/mongodb.png "Logo Title Text 1")
+![alt text](images/mongodb.png "mongo")
 ### MongoDB 
-![alt text](images/docker.png "Logo Title Text 1")
+![alt text](images/docker.png "docker")
 ### Docker
-![alt text](images/flask.jpg "Logo Title Text 1")
+![alt text](images/flask.jpg "flask")
 ### Flask 2.0
 
-#How to set up the project? 
+# How to set up the project? 
 
 you need to have a docker environment installed than execute both these commands : 
 

@@ -21,14 +21,14 @@ The dataset is stored in mongodb database and contain three essential columns qu
 
 
 ![alt text](images/python1.png "Logo Title Text 1")
-###Python 3.9.5
+### Python 3.9.5
 
 ![alt text](images/mongodb.png "Logo Title Text 1")
-###MongoDB 
+### MongoDB 
 ![alt text](images/docker.png "Logo Title Text 1")
-###Docker
+### Docker
 ![alt text](images/flask.jpg "Logo Title Text 1")
-###Flask 2.0
+### Flask 2.0
 
 #How to set up the project? 
 

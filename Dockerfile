@@ -13,5 +13,6 @@ RUN apt-get install ffmpeg libsm6 libxext6  -y
 RUN apt-get -y install build-essential
 RUN apt-get -y install lsb-release
 RUN apt-get -y install vim
+RUN pip install playsound
 COPY ./app ./app
 CMD ["python","./app/app.py"]

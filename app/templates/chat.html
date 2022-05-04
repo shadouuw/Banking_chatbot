@@ -2118,8 +2118,8 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
         <div class="modal-content call-request">
             <div class="modal-body"  >
-                <figure hidden class="avatar avatar-xl">
-                    <img  src="{{ url_for('static', filename='dist/media/img/avatar2.jpg') }}" class="rounded-circle" alt="image">
+                <figure  class="avatar avatar-xl recogn">
+                    <img  src="{{ url_for('static', filename='dist/media/img/recogn2.gif') }}" style="position: static ; left : 100;" class="rounded-circle" alt="image">
                 </figure>
                 <h4 class="my-4">  <span  style="color: #444d73" >Sign In</span></h4>
                 <style>
@@ -2183,6 +2183,8 @@
 
 
 </style>
+
+
 
 <div class="form-holder">
 
@@ -2384,7 +2386,7 @@
 </div>
      <div class="select-box">
 
-	<img src="{{ url_for('static', filename='dist/media/img/noResult.gif') }}" class="image-cropper" style="width:50% ; margin: auto; padding: 10px; "  alt="no response"/><br/>
+	<img src="{{ url_for('static', filename='dist/media/img/no_response2.gif') }}" class="image-cropper" style=" margin: auto; padding: 10px; "  alt="no response"/><br/>
          <style>
              .image-cropper {
   width: 400px;
@@ -3321,13 +3323,29 @@ var _this = void 0;
 
                 i=0
                 j=1
+                return (
+                o("#videoCallRequest").modal("hide"),
+                setTimeout(async function () {
+                    o("#videoCall").modal("show");
+            },1),
+                !1
+            );}
 
 
-            return (
+
+        });
+
+
+
+        }),
+
+              e.on("click", ".recogn", function () {
+                  console.log("hi")
+         return (
                 o("#videoCallRequest").modal("hide"),
                 setTimeout(async function () {
                     o("#face_recognition").modal("show");
-                    if (j == 1) {
+
                         await $.get("/cam", {}).done(async function (data) {
                             console.log(a);
                             console.log(data);
@@ -3358,20 +3376,14 @@ var _this = void 0;
 
                         })
 
-                    }
+
 
 
                 },1),
                 !1
-            );}
-
-
-
-        });
-
-
-
-        }),
+            );
+        })
+        ,
 
         e.on("click", ".dollar", function () {
             return (
@@ -3650,7 +3662,7 @@ function pollDOM () {
 
             (a = o.trim(a))
 
-                ? (n({type: "out", text: a, avatar: "avatar9.jpg", name: "hamma"}),
+                ? (n({type: "out", text: a, avatar: "avatar9.jpg", name: "user"}),
                     t.val(""),
                     o(".chat .chat-body").scrollTop(o(".chat .chat-body")[0].scrollHeight),
                     setTimeout(async function () {

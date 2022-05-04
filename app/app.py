@@ -63,11 +63,13 @@ class User(db.Document):
     email = StringField()
     password = StringField()
     role = StringField()
+    img = StringField()
 
     def to_json(self):
         return {
             "email": self.email,
             "password": self.password,
+            "img": self.img,
             "role": self.role
 
         }
@@ -189,18 +191,15 @@ def chatbot_response(msg, var):
         print("None answer value")
     if res[1] < [[0.52]] and detectlanguage.simple_detect(msg) == "en":
         if res[1] == [[0]]:
-            data2 = pd.DataFrame.from_records(chat.collection_name2.find())
-
-            if Disscussion.objects(client_question=msg, is_correct_answer=0).first():
-                dis = Disscussion(client_question=msg, chatbot_answer="", is_correct_answer=0)
-                dis.save()
-                return chat.randomsuggestion()
+            dis = Disscussion(client_question=msg, chatbot_answer="", is_correct_answer=0)
+            dis.save()
+            return chat.randomsuggestion()
         else:
 
             dis = Disscussion(client_question=msg, chatbot_answer="", is_correct_answer=0)
             dis.save()
             try:
-                return chat.get_response2(msg)[0]
+                return chat.get_response2(msg)
             except:
                 return chat.randomsuggestion()
 
@@ -217,6 +216,7 @@ def chatbot_response(msg, var):
             res1 = GoogleTranslator(source='auto', target=detectlanguage.simple_detect(msg)).translate(res[2])
         except:
             res1 = ""
+        print(res[1])
         res = GoogleTranslator(source='auto', target=detectlanguage.simple_detect(msg)).translate(res[0])
         print(res)
         last_answer = res1
@@ -286,11 +286,12 @@ def add_chat2():
     question = request.args.get('question')
     answer = request.args.get('answer')
     explication = request.args.get('explication')
-    diss_obj = Disscussion.objects(client_question=question).first()
+    diss_obj = Disscussion.objects(client_question=question,is_correct_answer=0).first()
     diss_obj.update(is_correct_answer=-1)
 
     new_chat = Chat(Question=question, Answer=answer, Explication=explication, Class="accounts")
     new_chat.save()
+
 
     return make_response("", 204)
 
@@ -428,13 +429,12 @@ def register1():
     users = db.Document()
 
     # existing_user = users.find_one({'name': request.form['username']})
-    login_user = User.objects(email="hamma").first()
-    passs = "1234567"
+
+    passs = "aaa"
     hashpass = bcrypt.hashpw(passs.encode('utf-8'), bcrypt.gensalt())
     password_hash = hashpass.decode('utf8')
-    chat = User(email="hamma3", password=password_hash, role="employee")
+    chat = User(email="baines", password=password_hash, role="employee", img="ines.jpg")
     chat.save()
-    session['username'] = "hamma"
 
     return render_template('login.html')
 
@@ -474,23 +474,30 @@ def compare_faces():
 @app.route('/cam')
 def camera_opening2():
     # initialize the camera
+    try:
+        cam = VideoCapture(0)  # 0 -> index of camera
 
-    cam = VideoCapture(0)  # 0 -> index of camera
+        s, img = cam.read()
+        if s:  # frame captured without any errors
+            namedWindow("cam-test")
+            destroyWindow("cam-test")
+            imwrite("filename.jpg", img)  # save image
+        result = False
 
-    s, img = cam.read()
-    if s:  # frame captured without any errors
-        namedWindow("cam-test")
-        destroyWindow("cam-test")
-        imwrite("filename.jpg", img)  # save image
-    result = False
+        target = "filename.jpg"
+        faces = chat.data_user["img"]
+        print(faces)
 
-    target = "filename.jpg"
-    faces = ["images/hamma1.jpg"]
+        response = []
+        for face in faces:
+            face = "images/" + face
+            distance, result = compare_image.main(target, face)
+            if result:
+                return str(result)
 
-    response = []
-    for face in faces:
-        distance, result = compare_image.main(target, face)
-    return str(result)
+        return str(result)
+    except:
+        return str(False)
 
 
 @app.route('/api/v1/compare_faces2')

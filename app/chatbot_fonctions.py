@@ -29,8 +29,9 @@ def get_database():
 dbname = get_database()
 
 collection_name = dbname["chat"]
+collection_user = dbname["user"]
 collection_name2 = dbname["disscussion"]
-
+data_user = pd.DataFrame.from_records(collection_user.find())
 data = pd.DataFrame.from_records(collection_name.find())
 data3 = pd.DataFrame.from_records(collection_name.find())
 data3 = data3[50:1800]
